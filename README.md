@@ -5,10 +5,10 @@ SkyBook is a production-hardened monolithic flight booking, dynamic capacity all
 
 Created By:
 Swayam Bhise<br>
-Atharva Dubal
-Shruti Jadhav
-Nidhee Dhulap
-Karishma Chauhan
+Atharva Dubal<br>
+Shruti Jadhav<br>
+Nidhee Dhulap<br>
+Karishma Chauhan<br>
 
 ---
 
