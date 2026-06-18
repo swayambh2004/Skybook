@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyBound | Travel the World</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000; /* Fallback: Black if GIF fails */
+            overflow: hidden;
+        }
+
+        /* --- THE FIXED GIF CSS --- */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Using background-image specifically for better compatibility */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                              url('plane.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 600px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            animation: slideUp 1s ease-out;
+            display: block; 
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        h1 span { color: #00d4ff; }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .btn-booking {
+            display: inline-flex;
+            align-items: center;
+            background: #00d4ff;
+            color: #010a1a;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-booking:hover {
+            background: white;
+            transform: translateY(-5px);
+        }
+
+        /* --- BIGGER LOADER STYLES --- */
+        #loader-container {
+            display: none;
+        }
+
+        .card {
+            --bg-color: rgba(0, 0, 0, 0.7);
+            background-color: var(--bg-color);
+            padding: 2rem 4rem;
+            border-radius: 1.5rem;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+        }
+
+        .loader {
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 40px;
+            height: 60px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .words {
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            padding-left: 12px;
+        }
+
+        .words::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(var(--bg-color) 0%, transparent 25%, transparent 75%, var(--bg-color) 100%);
+            z-index: 20;
+        }
+
+        .word {
+            display: block;
+            height: 100%;
+            color: #00d4ff;
+            animation: spin_4991 4s infinite cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        @keyframes spin_4991 {
+            0%, 15% { transform: translateY(0); }
+            20%, 35% { transform: translateY(-100%); }
+            40%, 55% { transform: translateY(-200%); }
+            60%, 75% { transform: translateY(-300%); }
+            80%, 100% { transform: translateY(-400%); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container"></div>
+
+    <section class="hero">
+        <div class="glass-card" id="main-card">
+            <i class="fas fa-plane-departure" style="font-size: 3.5rem; color: #00d4ff; margin-bottom: 20px;"></i>
+            <h1>Sky<span>Bound</span></h1>
+            <p>Ready for takeoff? Your journey starts with a single click.</p>
+            <button class="btn-booking" onclick="startLoading()">
+                BOOK YOUR SEAT <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div id="loader-container">
+            <div class="card">
+                <div class="loader">
+                    <p>preparing</p>
+                    <div class="words">
+                        <span class="word">tickets.....</span>
+                        <span class="word">routes.....</span>
+                        <span class="word">luggage.....</span>
+                        <span class="word">seats.....</span>
+                        <span class="word">travel.....</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function startLoading() {
+            document.getElementById('main-card').style.display = 'none';
+            document.getElementById('loader-container').style.display = 'block';
+            setTimeout(function() {
+                window.location.href = "login.php";
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
